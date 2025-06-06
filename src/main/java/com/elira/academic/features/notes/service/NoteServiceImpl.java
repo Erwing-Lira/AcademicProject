@@ -36,31 +36,14 @@ public class NoteServiceImpl implements INoteService {
 
     @Override
     public Note create(CreateNoteDTO dto) {
-        Student student = null;
-        Asignature asignature = null;
-        PeriodoLectivo periodoLectivo = null;
+        Student student = studentRepository.findById(dto.getStudentId())
+                .orElseThrow();
 
-        if (dto.getStudentId() == null &&
-                dto.getAsignatureId() == null &&
-                dto.getPeriodoId() == null
-        ) {
-            throw new IllegalArgumentException();
-        }
-
-        if (dto.getStudentId() != null) {
-            student = studentRepository.findById(dto.getStudentId())
+        Asignature asignature = asignatureRepository.findById(dto.getAsignatureId())
                     .orElseThrow();
-        }
 
-        if (dto.getAsignatureId() != null) {
-            asignature = asignatureRepository.findById(dto.getAsignatureId())
+        PeriodoLectivo periodoLectivo = periodRepository.findById(dto.getPeriodoId())
                     .orElseThrow();
-        }
-
-        if (dto.getPeriodoId() != null) {
-            periodoLectivo = periodRepository.findById(dto.getPeriodoId())
-                    .orElseThrow();
-        }
 
         Note note = NoteMapper.toEntity(dto, student, asignature, periodoLectivo);
         return noteRepository.save(note);
