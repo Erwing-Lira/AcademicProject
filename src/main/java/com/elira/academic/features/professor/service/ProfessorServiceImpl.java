@@ -7,6 +7,7 @@ import com.elira.academic.features.professor.model.Professor;
 import com.elira.academic.features.professor.repository.ProfessorRepository;
 import com.elira.academic.features.user.model.User;
 import com.elira.academic.features.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,21 +17,28 @@ import java.util.Optional;
 public class ProfessorServiceImpl implements IProfessorService {
     private final ProfessorRepository professorRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ProfessorServiceImpl(
             ProfessorRepository professorRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.professorRepository = professorRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Professor create(CreateProfessorDTO dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow();
+        User user = new User();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setRoles(dto.getRoles());
 
-        Professor professor = ProfessorMapper.toEntity(dto, user);
+        User userSave = userRepository.save(user);
+        Professor professor = ProfessorMapper.toEntity(dto, userSave);
         return professorRepository.save(professor);
     }
 

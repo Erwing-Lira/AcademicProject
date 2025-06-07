@@ -1,7 +1,10 @@
 package com.elira.academic.config;
 
+import com.elira.academic.config.filter.JwtAuthenticationFilter;
+import com.elira.academic.config.filter.JwtValidationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,9 +38,28 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .httpBasic(Customizer.withDefaults())
+                .addFilter(
+                        new JwtAuthenticationFilter(authenticationManager())
+                )
+                .addFilter(
+                        new JwtValidationFilter(authenticationManager())
+                )
                 .authorizeHttpRequests( auth ->
-                        auth.anyRequest().authenticated()
+                        auth
+                                .requestMatchers(HttpMethod.POST, "/api/professor").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/students").permitAll()
+                                .anyRequest().authenticated()
                 );
         return httpSecurity.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }

@@ -1,6 +1,6 @@
 package com.elira.academic.features.user.model;
 
-import com.elira.academic.config.models.Roles;
+import com.elira.academic.features.roles.models.Roles;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

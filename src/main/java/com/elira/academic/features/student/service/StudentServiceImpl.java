@@ -9,6 +9,7 @@ import com.elira.academic.features.student.model.Student;
 import com.elira.academic.features.student.repository.StudentRepository;
 import com.elira.academic.features.user.model.User;
 import com.elira.academic.features.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,27 +20,34 @@ public class StudentServiceImpl implements IStudentService{
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public StudentServiceImpl(
             StudentRepository studentRepository,
             UserRepository userRepository,
-            CourseRepository courseRepository
+            CourseRepository courseRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
     public Student create(CreateStudentDTO dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow();
+        User user = new User();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setRoles(dto.getRoles());
 
         Course course = courseRepository.findById(dto.getCourseId())
                 .orElseThrow();
 
-        Student student = StudentMapper.toEntity(user, course);
+        User userSave = userRepository.save(user);
+        Student student = StudentMapper.toEntity(userSave, course);
         return studentRepository.save(student);
     }
 
