@@ -46,6 +46,10 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests( auth ->
                         auth
+                                /* CREATE PROFESSOR AND STUDENT FOR DEV
+                                .requestMatchers(HttpMethod.POST, "/api/professor").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/students").permitAll()*/
+
                                 // ADMIN
                                 .requestMatchers("/api/users/**").hasRole("ADMIN")
                                 .requestMatchers("/api/professor/**").hasRole("ADMIN")
