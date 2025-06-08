@@ -46,8 +46,26 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests( auth ->
                         auth
-                                .requestMatchers(HttpMethod.POST, "/api/professor").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/students").permitAll()
+                                // ADMIN
+                                .requestMatchers("/api/users/**").hasRole("ADMIN")
+                                .requestMatchers("/api/professor/**").hasRole("ADMIN")
+                                .requestMatchers("/api/students/**").hasRole("ADMIN")
+                                .requestMatchers("/api/asignatures/**").hasRole("ADMIN")
+                                .requestMatchers("/api/courses/**").hasRole("ADMIN")
+                                .requestMatchers("/api/periods/**").hasRole("ADMIN")
+                                .requestMatchers("/api/reports/**").hasRole("ADMIN")
+
+                                // PROFESOR
+                                .requestMatchers("/api/notes/**").hasRole("PROFESOR")
+                                .requestMatchers("/api/materials/**").hasRole("PROFESOR")
+                                .requestMatchers("/api/professor/**").hasRole("PROFESOR")
+
+                                // ESTUDIANTE
+                                .requestMatchers("/api/students/**").hasRole("ESTUDIANTE")
+                                .requestMatchers("/api/notes/student/**").hasRole("ESTUDIANTE")
+                                .requestMatchers("/api/materials/asignature/**").hasRole("ESTUDIANTE")
+
+
                                 .anyRequest().authenticated()
                 );
         return httpSecurity.build();
