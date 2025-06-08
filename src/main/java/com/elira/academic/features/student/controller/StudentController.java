@@ -8,6 +8,7 @@ import com.elira.academic.features.student.model.Student;
 import com.elira.academic.features.student.service.IStudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,8 @@ public class StudentController {
         );
     }
 
+
+    @PreAuthorize("hasRole('ESTUDIANTE')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(
             @PathVariable Long id
@@ -65,6 +68,7 @@ public class StudentController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasRole('ESTUDIANTE')")
     @GetMapping("/{id}/notes")
     public ResponseEntity<?> findNotesById(
             @PathVariable Long id

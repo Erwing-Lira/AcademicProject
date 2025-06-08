@@ -7,6 +7,7 @@ import com.elira.academic.features.asignature.model.Asignature;
 import com.elira.academic.features.asignature.service.IAsignatureService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,7 @@ public class AsigntaureController {
         );
     }
 
+    @PreAuthorize("hasRole('ESTUDIANTE')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findByID(
             @PathVariable Long id

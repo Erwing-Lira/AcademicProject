@@ -6,6 +6,7 @@ import com.elira.academic.features.material.model.Material;
 import com.elira.academic.features.material.service.IMaterialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class MaterialController {
                 );
     }
 
+    @PreAuthorize("hasRole('ESTUDIANTE')")
     @GetMapping("/asignature/{id}")
     public ResponseEntity<?> findById(
             @PathVariable Long id

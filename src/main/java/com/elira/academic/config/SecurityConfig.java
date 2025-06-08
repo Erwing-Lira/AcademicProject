@@ -58,10 +58,8 @@ public class SecurityConfig {
                                 // PROFESOR
                                 .requestMatchers("/api/notes/**").hasRole("PROFESOR")
                                 .requestMatchers("/api/materials/**").hasRole("PROFESOR")
-                                .requestMatchers("/api/professor/**").hasRole("PROFESOR")
 
                                 // ESTUDIANTE
-                                .requestMatchers("/api/students/**").hasRole("ESTUDIANTE")
                                 .requestMatchers("/api/notes/student/**").hasRole("ESTUDIANTE")
                                 .requestMatchers("/api/materials/asignature/**").hasRole("ESTUDIANTE")
 

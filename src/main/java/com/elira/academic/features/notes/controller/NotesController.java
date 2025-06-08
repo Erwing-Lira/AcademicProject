@@ -6,6 +6,7 @@ import com.elira.academic.features.notes.model.Note;
 import com.elira.academic.features.notes.service.INoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ public class NotesController {
                 );
     }
 
+    @PreAuthorize("hasRole('ESTUDIANTE')")
     @GetMapping("/asignature/{id}")
     public ResponseEntity<?> findByAsignatureId(
             @PathVariable Long id
@@ -49,6 +51,7 @@ public class NotesController {
         );
     }
 
+    @PreAuthorize("hasRole('ESTUDIANTE')")
     @GetMapping("/student/{id}")
     public ResponseEntity<?> findByStudentId(
             @PathVariable Long id
