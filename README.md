@@ -1,5 +1,5 @@
 # Academic Project
-All the url responses ok
+Final Project to manage an academic school, all the information are in the `Proyecto Final.docx`.
 
 ### Docker
 Start Docker with
@@ -16,3 +16,6 @@ To be able to see the MySQL Database:
 Server: **mysql_db**  
 User: **root**  
 Password: **root**
+
+### Postman curl's
+The postman curl's are in the `academic.postman_collection.json` file, to be able to see improt the collection.
