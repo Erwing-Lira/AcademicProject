@@ -18,4 +18,4 @@ User: **root**
 Password: **root**
 
 ### Postman curl's
-The postman curl's are in the `academic.postman_collection.json` file, to be able to see improt the collection.
+The postman curl's are in the `academic.postman_collection.json` file, to be able to see import the collection.
