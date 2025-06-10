@@ -67,8 +67,6 @@ public class SecurityConfig {
                                 // ESTUDIANTE
                                 .requestMatchers("/api/notes/student/**").hasRole("ESTUDIANTE")
                                 .requestMatchers("/api/materials/asignature/**").hasRole("ESTUDIANTE")
-
-
                                 .anyRequest().authenticated()
                 );
         return httpSecurity.build();

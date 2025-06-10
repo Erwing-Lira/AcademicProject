@@ -8,6 +8,6 @@ INSERT INTO professors (specialty,user_id) VALUES ("Logica",1)
 
 INSERT INTO courses (academic_year,name) VALUES ('2025', 'Big Data');
 
-INSERT INTO users (email,enabled,name,password) values ("example2@example.com",true,"Example 2","$2a$10$cCA0qjVyv.6UVGhdoPxpa.lrdv4NgIWAeHUm1iFjO61.rALf98yuq")
-INSERT INTO users_roles (user_id,role_id) values (3, 1)
+INSERT INTO users (email,enabled,name,password) values ("example1@example.com",true,"Example 1","$2a$10$cCA0qjVyv.6UVGhdoPxpa.lrdv4NgIWAeHUm1iFjO61.rALf98yuq")
 INSERT INTO students (course_actual_id,user_id) values (1,2)
+INSERT INTO users_roles (user_id,role_id) values (2, 3)
